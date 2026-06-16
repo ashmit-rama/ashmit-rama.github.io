@@ -5,7 +5,9 @@ export const experience = [
     period: "Jun 2026 – Present",
     location: "",
     bullets: [
-      "Built an AI-powered semantic search prototype by integrating OpenAI APIs and embedding models with the company's internal document management system, enabling users to retrieve relevant information through natural language queries.",
+      "Built a semantic search prototype integrating OpenAI APIs with iQuanti's internal document management system for natural language document retrieval.",
+      "Leveraged OpenAI ADA-002 embeddings to create vector-based search capabilities that improved retrieval relevance and contextual matching.",
+      "Researched GPT-4 and embedding models to evaluate large language model applications for enterprise knowledge management and AI-assisted search."
     ],
   },
   {

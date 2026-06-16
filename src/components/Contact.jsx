@@ -1,22 +1,49 @@
+import { useRef } from 'react'
 import { Github, Linkedin, Mail } from 'lucide-react'
+import { useInView } from '../hooks/useInView'
 
 export default function Contact() {
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef)
+
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" ref={sectionRef} className="py-24">
       <div className="max-w-5xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-neutral-100 mb-2">Contact</h2>
-        <div className="w-12 h-0.5 bg-teal-400 mb-8 mx-auto" />
-        <p className="text-neutral-400 max-w-md mx-auto mb-10 leading-relaxed">
+        <div className={isInView ? 'animate-fade-up' : 'opacity-0'}>
+          <h2 className="text-3xl font-bold text-neutral-100 mb-2">Contact</h2>
+          <div className="w-12 h-0.5 bg-teal-400 mb-8 mx-auto" />
+        </div>
+        <p
+          className={`text-neutral-400 max-w-md mx-auto mb-8 leading-relaxed ${
+            isInView ? 'animate-fade-up' : 'opacity-0'
+          }`}
+          style={{ animationDelay: '100ms' }}
+        >
           I'm always open to new opportunities, collaborations, or just a good conversation.
           Feel free to reach out.
         </p>
         <a
           href="mailto:ashmitrama@gmail.com"
-          className="inline-block px-8 py-3 border border-teal-400 text-teal-400 rounded-lg hover:bg-teal-400/10 transition-colors mb-12"
+          className={`mb-5 block font-mono text-sm text-teal-300 transition-colors hover:text-teal-200 ${
+            isInView ? 'animate-fade-up' : 'opacity-0'
+          }`}
+          style={{ animationDelay: '200ms' }}
+        >
+          ashmitrama@gmail.com
+        </a>
+        <a
+          href="mailto:ashmitrama@gmail.com"
+          className={`inline-block px-8 py-3 border border-teal-400 text-teal-400 rounded-lg hover:bg-teal-400/10 transition-colors mb-12 ${
+            isInView ? 'animate-fade-up' : 'opacity-0'
+          }`}
+          style={{ animationDelay: '300ms' }}
         >
           Say Hello
         </a>
-        <div className="flex justify-center gap-8">
+        <div
+          className={`flex justify-center gap-8 ${isInView ? 'animate-fade-up' : 'opacity-0'}`}
+          style={{ animationDelay: '400ms' }}
+        >
           <a
             href="https://github.com/ashmit-rama"
             target="_blank"
@@ -44,7 +71,12 @@ export default function Contact() {
           </a>
         </div>
       </div>
-      <div className="max-w-5xl mx-auto px-6 mt-16 pt-6 border-t border-neutral-800 text-center">
+      <div
+        className={`max-w-5xl mx-auto px-6 mt-16 pt-6 border-t border-neutral-800 text-center ${
+          isInView ? 'animate-fade-in' : 'opacity-0'
+        }`}
+        style={{ animationDelay: '500ms' }}
+      >
         <p className="text-neutral-700 text-sm">Built by Ashmit Rama</p>
       </div>
     </section>

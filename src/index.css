@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -9,4 +31,25 @@ body {
   background-color: #0a0a0a;
   color: #f5f5f5;
   -webkit-font-smoothing: antialiased;
+}
+
+.animate-fade-up {
+  animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 700ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

@@ -1,16 +1,26 @@
+import { useRef } from 'react'
 import { experience } from '../data/experience'
+import { useInView } from '../hooks/useInView'
 
 export default function Experience() {
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef)
+
   return (
-    <section id="experience" className="py-24">
+    <section id="experience" ref={sectionRef} className="py-24">
       <div className="max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-neutral-100 mb-2">Experience</h2>
-        <div className="w-12 h-0.5 bg-teal-400 mb-12" />
+        <div className={isInView ? 'animate-fade-up' : 'opacity-0'}>
+          <h2 className="text-3xl font-bold text-neutral-100 mb-2">Experience</h2>
+          <div className="w-12 h-0.5 bg-teal-400 mb-12" />
+        </div>
         <div className="space-y-6">
           {experience.map((job, i) => (
             <div
               key={i}
-              className="bg-neutral-900 border border-neutral-800 rounded-xl p-6 hover:border-neutral-700 transition-colors"
+              className={`bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-neutral-700 transition-colors ${
+                isInView ? 'animate-fade-up' : 'opacity-0'
+              }`}
+              style={{ animationDelay: `${100 + i * 100}ms` }}
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 mb-4">
                 <div>

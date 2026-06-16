@@ -35,12 +35,4 @@ export const projects = [
     github: null,
     demo: null,
   },
-  {
-    name: "STEMwise Loudoun",
-    subtitle: "",
-    description: "Details coming soon.",
-    tech: [],
-    github: null,
-    demo: null,
-  },
 ]

@@ -18,6 +18,24 @@ export const projects = [
     demo: null,
   },
   {
+    name: "AI Resume Screening Workflow",
+    subtitle: "Recruiting Automation System",
+    description:
+      "Built an AI-powered recruiting automation system using n8n, Apify, APIs, and Google Sheets to scrape, filter, and rank candidates based on custom hiring criteria. Automated resume processing and candidate evaluation workflows, reducing manual review time and improving recruiting efficiency.",
+    tech: ["n8n", "Apify", "APIs", "Google Sheets", "Automation"],
+    github: null,
+    demo: null,
+  },
+  {
+    name: "HousingMatch AI / Proximate",
+    subtitle: "Personalized Housing Recommendations",
+    description:
+      "Developed a personalized housing recommendation platform that matches users with housing options based on preferences, location, and lifestyle factors. Integrated recommendation algorithms and external data sources to streamline the housing search process and improve decision-making.",
+    tech: ["AI", "Recommendation Systems", "External Data", "Housing"],
+    github: null,
+    demo: null,
+  },
+  {
     name: "STEMwise Loudoun",
     subtitle: "",
     description: "Details coming soon.",

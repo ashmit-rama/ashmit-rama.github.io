@@ -7,41 +7,55 @@ export default function Experience() {
   const isInView = useInView(sectionRef)
 
   return (
-    <section id="experience" ref={sectionRef} className="py-24">
-      <div className="max-w-5xl mx-auto px-6">
+    <section id="experience" ref={sectionRef} className="relative z-[1] py-24">
+      <div className="mx-auto max-w-3xl px-6">
         <div className={isInView ? 'animate-fade-up' : 'opacity-0'}>
-          <h2 className="text-3xl font-bold text-neutral-100 mb-2">Experience</h2>
-          <div className="w-12 h-0.5 bg-emerald-400 mb-12" />
+          <p className="mb-1.5 font-mono text-xs uppercase tracking-[2px] text-emerald-400">
+            02 — Where I&apos;ve worked
+          </p>
+          <h2
+            className="mb-12 text-[34px] font-bold tracking-[-0.5px] text-neutral-100"
+            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            Experience
+          </h2>
         </div>
-        <div className="space-y-6">
+
+        <div className="relative">
+          <div
+            className="absolute left-[7px] top-2 bottom-2 w-0.5"
+            style={{ background: 'linear-gradient(180deg, #34d399, rgba(52,211,153,0.06))' }}
+          />
           {experience.map((job, i) => (
             <div
               key={i}
-              className={`bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-neutral-700 transition-colors ${
-                isInView ? 'animate-fade-up' : 'opacity-0'
-              }`}
-              style={{ animationDelay: `${100 + i * 100}ms` }}
+              className={`relative pb-11 pl-11 ${isInView ? 'animate-fade-up' : 'opacity-0'}`}
+              style={{ animationDelay: `${100 + i * 120}ms` }}
             >
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 mb-4">
-                <div>
-                  <h3 className="text-neutral-100 font-semibold text-lg">{job.company}</h3>
-                  <p className="text-emerald-400 text-sm">{job.role}</p>
+              <div className="animate-dot-pulse absolute left-0 top-[3px] h-4 w-4 rounded-full border-2 border-emerald-400 bg-neutral-950" />
+              <div className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-[26px] backdrop-blur-sm transition-all duration-300 hover:translate-x-1 hover:border-emerald-400/40">
+                <div className="mb-1 flex flex-wrap items-baseline justify-between gap-1.5">
+                  <h3
+                    className="text-xl font-semibold text-neutral-100"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
+                    {job.company}
+                  </h3>
+                  <p className="font-mono text-[12.5px] text-neutral-500">{job.period}</p>
                 </div>
-                <div className="sm:text-right flex-shrink-0">
-                  <p className="text-neutral-500 text-sm">{job.period}</p>
-                  {job.location && (
-                    <p className="text-neutral-600 text-sm">{job.location}</p>
-                  )}
+                <div className="mb-4 flex flex-wrap justify-between gap-1.5">
+                  <p className="text-sm text-emerald-400">{job.role}</p>
+                  {job.location && <p className="text-[13px] text-neutral-600">{job.location}</p>}
                 </div>
+                <ul className="space-y-2.5">
+                  {job.bullets.map((bullet, j) => (
+                    <li key={j} className="flex gap-3 text-[14.5px] leading-[1.65] text-neutral-400">
+                      <span className="flex-shrink-0 text-emerald-400">▹</span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-2">
-                {job.bullets.map((bullet, j) => (
-                  <li key={j} className="text-neutral-400 text-sm leading-relaxed flex gap-3">
-                    <span className="text-emerald-400 mt-0.5 flex-shrink-0">▹</span>
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
             </div>
           ))}
         </div>

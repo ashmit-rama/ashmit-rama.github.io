@@ -16,11 +16,7 @@ export default function Projects() {
     running: false,
     raf: 0,
     snapT: 0,
-    autoT: 0,
-    resumeT: 0,
-    autoDir: 1,
     nav: null,
-    pauseAuto: null,
   }).current
 
   useEffect(() => {
@@ -36,7 +32,6 @@ export default function Projects() {
     if (!N) return undefined
 
     const clamp = (v) => Math.max(0, Math.min(N - 1, v))
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const update = () => {
       const pos = ctrl.pos
@@ -82,46 +77,6 @@ export default function Projects() {
       ctrl.raf = requestAnimationFrame(tick)
     }
 
-    const startAuto = () => {
-      if (reduceMotion || ctrl.autoT) return
-
-      ctrl.autoT = window.setInterval(() => {
-        const current = Math.round(ctrl.target)
-        let next = current + ctrl.autoDir
-
-        if (next >= N) {
-          ctrl.autoDir = -1
-          next = Math.max(0, N - 2)
-        } else if (next < 0) {
-          ctrl.autoDir = 1
-          next = Math.min(N - 1, 1)
-        }
-
-        ctrl.target = clamp(next)
-        kick()
-      }, 3600)
-    }
-
-    const stopAuto = () => {
-      clearInterval(ctrl.autoT)
-      ctrl.autoT = 0
-    }
-
-    const resumeAuto = () => {
-      clearTimeout(ctrl.resumeT)
-      ctrl.resumeT = 0
-      startAuto()
-    }
-
-    const pauseAuto = (resumeDelay = 0) => {
-      stopAuto()
-      clearTimeout(ctrl.resumeT)
-
-      if (resumeDelay > 0 && !reduceMotion) {
-        ctrl.resumeT = window.setTimeout(resumeAuto, resumeDelay)
-      }
-    }
-
     const queueSnap = () => {
       clearTimeout(ctrl.snapT)
       ctrl.snapT = setTimeout(() => {
@@ -142,7 +97,6 @@ export default function Projects() {
       const atEnd = ctrl.target >= N - 1.001 && primary > 0
       if (atStart || atEnd) return
       e.preventDefault()
-      pauseAuto(5000)
       ctrl.target = clamp(ctrl.target + primary * 0.0032)
       queueSnap()
       kick()
@@ -150,7 +104,6 @@ export default function Projects() {
 
     let drag = null
     const onDown = (e) => {
-      pauseAuto()
       drag = { x: e.clientX, t: ctrl.target }
       stage.style.cursor = 'grabbing'
       try {
@@ -170,12 +123,10 @@ export default function Projects() {
       stage.style.cursor = 'grab'
       ctrl.target = clamp(Math.round(ctrl.target))
       kick()
-      pauseAuto(5000)
     }
 
     const dotHandlers = dots.map((d, i) => {
       const h = () => {
-        pauseAuto(5000)
         ctrl.target = clamp(i)
         kick()
       }
@@ -184,48 +135,27 @@ export default function Projects() {
     })
 
     ctrl.nav = (dir) => {
-      pauseAuto(5000)
-      ctrl.autoDir = dir > 0 ? 1 : -1
       ctrl.target = clamp(Math.round(ctrl.target) + dir)
       kick()
     }
-    ctrl.pauseAuto = pauseAuto
-
-    const onPointerEnter = () => pauseAuto()
-    const onPointerLeave = () => resumeAuto()
-    const onFocusIn = () => pauseAuto()
-    const onFocusOut = () => resumeAuto()
 
     measure()
     window.addEventListener('resize', measure)
-    stage.addEventListener('pointerenter', onPointerEnter)
-    stage.addEventListener('pointerleave', onPointerLeave)
-    stage.addEventListener('focusin', onFocusIn)
-    stage.addEventListener('focusout', onFocusOut)
     stage.addEventListener('wheel', onWheel, { passive: false })
     stage.addEventListener('pointerdown', onDown)
     window.addEventListener('pointermove', onMove)
     window.addEventListener('pointerup', onUp)
     kick()
-    startAuto()
 
     return () => {
       cancelAnimationFrame(ctrl.raf)
       clearTimeout(ctrl.snapT)
-      clearTimeout(ctrl.resumeT)
-      stopAuto()
       window.removeEventListener('resize', measure)
-      stage.removeEventListener('pointerenter', onPointerEnter)
-      stage.removeEventListener('pointerleave', onPointerLeave)
-      stage.removeEventListener('focusin', onFocusIn)
-      stage.removeEventListener('focusout', onFocusOut)
       stage.removeEventListener('wheel', onWheel)
       stage.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
       dots.forEach((d, i) => d.removeEventListener('click', dotHandlers[i]))
-      ctrl.pauseAuto = null
-      ctrl.nav = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -237,8 +167,15 @@ export default function Projects() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="mb-9 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="mb-2 text-3xl font-bold text-neutral-100">Projects</h2>
-            <div className="h-0.5 w-12 bg-emerald-400" />
+            <p className="mb-1.5 font-mono text-xs uppercase tracking-[2px] text-emerald-400">
+              03 — Things I&apos;ve built
+            </p>
+            <h2
+              className="text-[34px] font-bold tracking-[-0.5px] text-neutral-100"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Projects
+            </h2>
           </div>
           <div className="flex items-center gap-3.5">
             <span className="font-mono text-[11px] uppercase tracking-[1px] text-neutral-600">
@@ -249,7 +186,7 @@ export default function Projects() {
                 type="button"
                 onClick={() => nav(-1)}
                 aria-label="Previous project"
-                className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-neutral-700 bg-neutral-900/60 text-neutral-300 transition-colors hover:border-emerald-400 hover:bg-emerald-500/10 hover:text-white"
+                className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-neutral-700 bg-neutral-900/60 text-neutral-300 transition-colors hover:border-emerald-400 hover:bg-emerald-500/[0.12] hover:text-white"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -257,7 +194,7 @@ export default function Projects() {
                 type="button"
                 onClick={() => nav(1)}
                 aria-label="Next project"
-                className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-neutral-700 bg-neutral-900/60 text-neutral-300 transition-colors hover:border-emerald-400 hover:bg-emerald-500/10 hover:text-white"
+                className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-neutral-700 bg-neutral-900/60 text-neutral-300 transition-colors hover:border-emerald-400 hover:bg-emerald-500/[0.12] hover:text-white"
               >
                 <ChevronRight size={18} />
               </button>
@@ -284,7 +221,7 @@ export default function Projects() {
             <article
               key={i}
               data-card
-              className="absolute left-1/2 top-1/2 flex flex-col rounded-[18px] border border-neutral-700/80 p-7"
+              className="absolute left-1/2 top-1/2 flex flex-col rounded-[18px] border border-neutral-700/80 p-7 transition-[border-color,box-shadow] duration-300 hover:border-emerald-400/55"
               style={{
                 width: 'clamp(280px, 74vw, 380px)',
                 height: 'clamp(360px, 60vw, 432px)',
@@ -292,12 +229,11 @@ export default function Projects() {
                 boxShadow: '0 30px 70px -30px rgba(0,0,0,0.85)',
                 transform: 'translate(-50%, -50%)',
                 willChange: 'transform, opacity',
-                transition: 'border-color 0.3s, box-shadow 0.3s',
               }}
             >
               <div className="mb-[18px] flex items-start justify-between">
                 <span className="font-mono text-[34px] font-medium leading-none text-emerald-400/45">
-                  {String(i + 1).padStart(2, '0')}
+                  {project.num}
                 </span>
                 <div className="flex gap-3">
                   {project.github && (
@@ -322,7 +258,10 @@ export default function Projects() {
                   )}
                 </div>
               </div>
-              <h3 className="mb-2 text-[22px] font-semibold leading-tight text-neutral-100">
+              <h3
+                className="mb-2 text-[22px] font-semibold leading-tight text-neutral-100"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
                 {project.name}
               </h3>
               {project.subtitle && (
@@ -338,7 +277,7 @@ export default function Projects() {
                   {project.tech.map((t, j) => (
                     <span
                       key={j}
-                      className="rounded-md bg-emerald-500/10 px-2.5 py-1 font-mono text-[11.5px] text-emerald-300"
+                      className="rounded-md bg-emerald-500/[0.12] px-2.5 py-1 font-mono text-[11.5px] text-emerald-300"
                     >
                       {t}
                     </span>

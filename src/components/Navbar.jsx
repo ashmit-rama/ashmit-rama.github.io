@@ -35,9 +35,13 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800">
-      <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#about" className="text-lg font-semibold text-emerald-400">
+    <nav className="fixed top-0 z-50 w-full border-b border-neutral-800 bg-neutral-950/[0.72] backdrop-blur-md">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+        <a
+          href="#about"
+          className="text-lg font-bold tracking-wide text-emerald-400"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
           AR
         </a>
         <div className="flex gap-8">

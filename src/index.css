@@ -1,59 +1,67 @@
 @import "tailwindcss";
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+@theme {
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-  to {
-    opacity: 1;
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.06); }
+}
+
+@keyframes aurora1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(12vw, 8vh) scale(1.15); }
+}
+
+@keyframes aurora2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-10vw, 12vh) scale(1.1); }
+}
+
+@keyframes aurora3 {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  50% { transform: translate(8vw, -10vh) scale(0.95); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12), 0 0 14px rgba(139, 92, 246, 0.45); }
+  50% { box-shadow: 0 0 0 7px rgba(139, 92, 246, 0.05), 0 0 22px rgba(139, 92, 246, 0.75); }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 100%; }
 }
 
 @keyframes gridDrift {
-  from {
-    background-position: 0 0, 0 0;
-  }
-
-  to {
-    background-position: 48px 48px, 48px 48px;
-  }
-}
-
-@keyframes floatSoft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-14px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(0.96);
-  }
-
-  50% {
-    opacity: 0.9;
-    transform: scale(1.06);
-  }
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 48px 48px, 48px 48px; }
 }
 
 html {
@@ -67,66 +75,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle green grid field, fading out toward the edges — replaces a flat/gradient background. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(52, 211, 153, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(52, 211, 153, 0.055) 1px, transparent 1px);
-  background-size: 48px 48px;
-  -webkit-mask-image: radial-gradient(ellipse 95% 80% at 50% 30%, #000 28%, transparent 76%);
-  mask-image: radial-gradient(ellipse 95% 80% at 50% 30%, #000 28%, transparent 76%);
-  animation: gridDrift 60s linear infinite;
+.animate-fade-up { animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in { animation: fadeIn 800ms ease-out both; }
+.animate-float { animation: float 7s ease-in-out infinite; }
+.animate-glow { animation: glow 5s ease-in-out infinite; }
+.animate-aurora-1 { animation: aurora1 26s ease-in-out infinite; }
+.animate-aurora-2 { animation: aurora2 32s ease-in-out infinite; }
+.animate-aurora-3 { animation: aurora3 38s ease-in-out infinite; }
+.animate-dot-pulse { animation: dotPulse 4s ease-in-out infinite; }
+.animate-ticker { animation: ticker 42s linear infinite; }
+.animate-blink { animation: blink 1s step-end infinite; }
+.animate-progress { animation: progress 1900ms cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.animate-grid-drift { animation: gridDrift 60s linear infinite; }
+
+.ticker-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
-/* Faint dots at the grid intersections for depth. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(110, 231, 183, 0.18) 1.3px, transparent 1.6px);
-  background-size: 48px 48px;
-  background-position: 24px 24px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 38%, #000 0%, transparent 68%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 38%, #000 0%, transparent 68%);
+.feed-track {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(167, 139, 250, 0.4) transparent;
 }
-
-.animate-fade-up {
-  animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.animate-fade-in {
-  animation: fadeIn 700ms ease-out both;
-}
-
-.animate-float-soft {
-  animation: floatSoft 6s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 4.5s ease-in-out infinite;
-}
+.feed-track::-webkit-scrollbar { height: 6px; }
+.feed-track::-webkit-scrollbar-thumb { background: rgba(167, 139, 250, 0.4); border-radius: 999px; }
+.feed-track::-webkit-scrollbar-track { background: transparent; }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 
-  body::before {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-float,
+  .animate-glow,
+  .animate-aurora-1,
+  .animate-aurora-2,
+  .animate-aurora-3,
+  .animate-dot-pulse,
+  .animate-ticker,
+  .animate-blink,
+  .animate-progress,
+  .animate-grid-drift {
     animation: none;
   }
 
   .animate-fade-up,
-  .animate-fade-in,
-  .animate-float-soft,
-  .animate-pulse-glow {
-    animation: none;
+  .animate-fade-in {
     opacity: 1;
     transform: none;
   }

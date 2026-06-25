@@ -16,7 +16,11 @@ export default function Projects() {
     running: false,
     raf: 0,
     snapT: 0,
+    autoT: 0,
+    resumeT: 0,
+    autoDir: 1,
     nav: null,
+    pauseAuto: null,
   }).current
 
   useEffect(() => {
@@ -32,6 +36,7 @@ export default function Projects() {
     if (!N) return undefined
 
     const clamp = (v) => Math.max(0, Math.min(N - 1, v))
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const update = () => {
       const pos = ctrl.pos
@@ -77,6 +82,46 @@ export default function Projects() {
       ctrl.raf = requestAnimationFrame(tick)
     }
 
+    const startAuto = () => {
+      if (reduceMotion || ctrl.autoT) return
+
+      ctrl.autoT = window.setInterval(() => {
+        const current = Math.round(ctrl.target)
+        let next = current + ctrl.autoDir
+
+        if (next >= N) {
+          ctrl.autoDir = -1
+          next = Math.max(0, N - 2)
+        } else if (next < 0) {
+          ctrl.autoDir = 1
+          next = Math.min(N - 1, 1)
+        }
+
+        ctrl.target = clamp(next)
+        kick()
+      }, 3600)
+    }
+
+    const stopAuto = () => {
+      clearInterval(ctrl.autoT)
+      ctrl.autoT = 0
+    }
+
+    const resumeAuto = () => {
+      clearTimeout(ctrl.resumeT)
+      ctrl.resumeT = 0
+      startAuto()
+    }
+
+    const pauseAuto = (resumeDelay = 0) => {
+      stopAuto()
+      clearTimeout(ctrl.resumeT)
+
+      if (resumeDelay > 0 && !reduceMotion) {
+        ctrl.resumeT = window.setTimeout(resumeAuto, resumeDelay)
+      }
+    }
+
     const queueSnap = () => {
       clearTimeout(ctrl.snapT)
       ctrl.snapT = setTimeout(() => {
@@ -97,6 +142,7 @@ export default function Projects() {
       const atEnd = ctrl.target >= N - 1.001 && primary > 0
       if (atStart || atEnd) return
       e.preventDefault()
+      pauseAuto(5000)
       ctrl.target = clamp(ctrl.target + primary * 0.0032)
       queueSnap()
       kick()
@@ -104,6 +150,7 @@ export default function Projects() {
 
     let drag = null
     const onDown = (e) => {
+      pauseAuto()
       drag = { x: e.clientX, t: ctrl.target }
       stage.style.cursor = 'grabbing'
       try {
@@ -123,10 +170,12 @@ export default function Projects() {
       stage.style.cursor = 'grab'
       ctrl.target = clamp(Math.round(ctrl.target))
       kick()
+      pauseAuto(5000)
     }
 
     const dotHandlers = dots.map((d, i) => {
       const h = () => {
+        pauseAuto(5000)
         ctrl.target = clamp(i)
         kick()
       }
@@ -135,27 +184,48 @@ export default function Projects() {
     })
 
     ctrl.nav = (dir) => {
+      pauseAuto(5000)
+      ctrl.autoDir = dir > 0 ? 1 : -1
       ctrl.target = clamp(Math.round(ctrl.target) + dir)
       kick()
     }
+    ctrl.pauseAuto = pauseAuto
+
+    const onPointerEnter = () => pauseAuto()
+    const onPointerLeave = () => resumeAuto()
+    const onFocusIn = () => pauseAuto()
+    const onFocusOut = () => resumeAuto()
 
     measure()
     window.addEventListener('resize', measure)
+    stage.addEventListener('pointerenter', onPointerEnter)
+    stage.addEventListener('pointerleave', onPointerLeave)
+    stage.addEventListener('focusin', onFocusIn)
+    stage.addEventListener('focusout', onFocusOut)
     stage.addEventListener('wheel', onWheel, { passive: false })
     stage.addEventListener('pointerdown', onDown)
     window.addEventListener('pointermove', onMove)
     window.addEventListener('pointerup', onUp)
     kick()
+    startAuto()
 
     return () => {
       cancelAnimationFrame(ctrl.raf)
       clearTimeout(ctrl.snapT)
+      clearTimeout(ctrl.resumeT)
+      stopAuto()
       window.removeEventListener('resize', measure)
+      stage.removeEventListener('pointerenter', onPointerEnter)
+      stage.removeEventListener('pointerleave', onPointerLeave)
+      stage.removeEventListener('focusin', onFocusIn)
+      stage.removeEventListener('focusout', onFocusOut)
       stage.removeEventListener('wheel', onWheel)
       stage.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
       dots.forEach((d, i) => d.removeEventListener('click', dotHandlers[i]))
+      ctrl.pauseAuto = null
+      ctrl.nav = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

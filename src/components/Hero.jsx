@@ -64,8 +64,8 @@ export default function Hero() {
           className="animate-fade-in relative mx-auto flex h-64 w-64 items-center justify-center rounded-full bg-neutral-950 p-3 opacity-0 ring-2 ring-emerald-300/70 ring-offset-8 ring-offset-neutral-950 md:h-80 md:w-80 lg:mx-0 lg:justify-self-end"
           style={{ animationDelay: '500ms' }}
         >
-          <div className="absolute inset-0 rounded-full bg-emerald-400/10 blur-2xl" />
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-emerald-300/20 bg-neutral-900">
+          <div className="animate-pulse-glow absolute inset-0 rounded-full bg-emerald-400/10 blur-2xl" />
+          <div className="animate-float-soft relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-emerald-300/20 bg-neutral-900">
             {headshotFailed ? (
               <span className="text-6xl font-bold text-emerald-300 md:text-7xl">AR</span>
             ) : (

@@ -11,7 +11,7 @@ export default function Contact() {
       <div className="max-w-5xl mx-auto px-6 text-center">
         <div className={isInView ? 'animate-fade-up' : 'opacity-0'}>
           <h2 className="text-3xl font-bold text-neutral-100 mb-2">Contact</h2>
-          <div className="w-12 h-0.5 bg-teal-400 mb-8 mx-auto" />
+          <div className="w-12 h-0.5 bg-emerald-400 mb-8 mx-auto" />
         </div>
         <p
           className={`text-neutral-400 max-w-md mx-auto mb-8 leading-relaxed ${
@@ -24,7 +24,7 @@ export default function Contact() {
         </p>
         <a
           href="mailto:ashmitrama@gmail.com"
-          className={`mb-5 block font-mono text-sm text-teal-300 transition-colors hover:text-teal-200 ${
+          className={`mb-5 block font-mono text-sm text-emerald-300 transition-colors hover:text-emerald-200 ${
             isInView ? 'animate-fade-up' : 'opacity-0'
           }`}
           style={{ animationDelay: '200ms' }}
@@ -33,7 +33,7 @@ export default function Contact() {
         </a>
         <a
           href="mailto:ashmitrama@gmail.com"
-          className={`inline-block px-8 py-3 border border-teal-400 text-teal-400 rounded-lg hover:bg-teal-400/10 transition-colors mb-12 ${
+          className={`inline-block px-8 py-3 border border-emerald-400 text-emerald-400 rounded-lg hover:bg-emerald-400/10 transition-colors mb-12 ${
             isInView ? 'animate-fade-up' : 'opacity-0'
           }`}
           style={{ animationDelay: '300ms' }}

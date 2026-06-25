@@ -11,7 +11,7 @@ export default function Experience() {
       <div className="max-w-5xl mx-auto px-6">
         <div className={isInView ? 'animate-fade-up' : 'opacity-0'}>
           <h2 className="text-3xl font-bold text-neutral-100 mb-2">Experience</h2>
-          <div className="w-12 h-0.5 bg-teal-400 mb-12" />
+          <div className="w-12 h-0.5 bg-emerald-400 mb-12" />
         </div>
         <div className="space-y-6">
           {experience.map((job, i) => (
@@ -25,7 +25,7 @@ export default function Experience() {
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 mb-4">
                 <div>
                   <h3 className="text-neutral-100 font-semibold text-lg">{job.company}</h3>
-                  <p className="text-teal-400 text-sm">{job.role}</p>
+                  <p className="text-emerald-400 text-sm">{job.role}</p>
                 </div>
                 <div className="sm:text-right flex-shrink-0">
                   <p className="text-neutral-500 text-sm">{job.period}</p>
@@ -37,7 +37,7 @@ export default function Experience() {
               <ul className="space-y-2">
                 {job.bullets.map((bullet, j) => (
                   <li key={j} className="text-neutral-400 text-sm leading-relaxed flex gap-3">
-                    <span className="text-teal-400 mt-0.5 flex-shrink-0">▹</span>
+                    <span className="text-emerald-400 mt-0.5 flex-shrink-0">▹</span>
                     {bullet}
                   </li>
                 ))}

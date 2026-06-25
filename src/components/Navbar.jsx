@@ -37,7 +37,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800">
       <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#about" className="text-lg font-semibold text-teal-400">
+        <a href="#about" className="text-lg font-semibold text-emerald-400">
           AR
         </a>
         <div className="flex gap-8">
@@ -49,12 +49,12 @@ export default function Navbar() {
                 key={item.id}
                 href={`#${item.id}`}
                 className={`relative pb-1 text-sm transition-colors ${
-                  isActive ? 'text-teal-400' : 'text-neutral-400 hover:text-neutral-100'
+                  isActive ? 'text-emerald-400' : 'text-neutral-400 hover:text-neutral-100'
                 }`}
               >
                 {item.label}
                 <span
-                  className={`absolute left-1/2 top-full h-1 w-1 -translate-x-1/2 rounded-full bg-teal-400 transition-opacity ${
+                  className={`absolute left-1/2 top-full h-1 w-1 -translate-x-1/2 rounded-full bg-emerald-400 transition-opacity ${
                     isActive ? 'opacity-100' : 'opacity-0'
                   }`}
                 />

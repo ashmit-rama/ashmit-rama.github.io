@@ -34,7 +34,7 @@ export default function Hero() {
           >
             Building at the intersection of <strong className="font-semibold text-white">code</strong> and{' '}
             <strong className="font-semibold text-white">capital</strong> — AI systems, fintech, and
-            open-source tooling. CS + Commerce @ UVA.
+            open-source tooling. CS + Commerce @ University of Virginia.
           </p>
 
           <div
@@ -68,7 +68,7 @@ export default function Hero() {
                 </span>
               </div>
               <p className="text-[13.5px] leading-[1.55] text-neutral-400">
-                Markets, fintech &amp; product and business strategy.
+                Fintech, product management, strategy & entrepreneurship.
               </p>
             </div>
           </div>

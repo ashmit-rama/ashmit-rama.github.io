@@ -1,13 +1,13 @@
 export const experience = [
   {
-    company: "iQuanti",
+    company: "A4 Solutions LLC",
     role: "Software Engineering Intern",
-    period: "Jun 2026 – Present",
+    period: "May 2026 – Present",
     location: "",
     bullets: [
-      "Built a semantic search prototype integrating OpenAI APIs with iQuanti's internal document management system for natural language document retrieval.",
-      "Leveraged OpenAI ADA-002 embeddings to create vector-based search capabilities that improved retrieval relevance and contextual matching.",
-      "Researched GPT-4 and embedding models to evaluate large language model applications for enterprise knowledge management and AI-assisted search."
+      "Cut customer information retrieval time ~60% by architecting backend services for a multi-agent healthcare platform, orchestrating three Python agents across AWS Lambda and Step Functions.",
+      "Delivered grounded AI responses from enterprise healthcare data in under 30 seconds by designing a Retrieval-Augmented Generation pipeline on Amazon Bedrock, with OpenSearch retrieval and Textract document ingestion.",
+      "Automated document ingestion and inference for a production platform by building event-driven microservices on ECS Fargate, triggered through EventBridge with S3 and DynamoDB for storage.",
     ],
   },
   {

@@ -6,7 +6,7 @@ export const experience = [
     location: "",
     bullets: [
       "Cut customer information retrieval time ~60% by architecting backend services for a multi-agent healthcare platform, orchestrating three Python agents across AWS Lambda and Step Functions.",
-      "Delivered grounded AI responses from enterprise healthcare data in under 30 seconds by designing a Retrieval-Augmented Generation pipeline on Amazon Bedrock, with OpenSearch retrieval and Textract document ingestion.",
+      "Delivered grounded AI responses from enterprise healthcare data by designing a Retrieval-Augmented Generation pipeline on Amazon Bedrock, with OpenSearch retrieval and Textract document ingestion.",
       "Automated document ingestion and inference for a production platform by building event-driven microservices on ECS Fargate, triggered through EventBridge with S3 and DynamoDB for storage.",
     ],
   },
